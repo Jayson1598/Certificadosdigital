@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Consultar Certificado</title>
+  <style>
+    body { font-family: Arial; text-align: center; padding: 30px; }
+    input, button { padding: 10px; margin: 10px; }
+  </style>
+</head>
+<body>
+  <h2>Consultar Certificado</h2>
+  <input type="text" id="certInput" placeholder="Ingrese número de certificado" />
+  <button onclick="buscarCertificado()">Buscar</button>
+  <div id="resultado" style="margin-top:20px;"></div>
+
+  <script>
+    function buscarCertificado() {
+      const certNum = document.getElementById('certInput').value.trim();
+      if (!certNum) return alert('Ingrese un número válido');
+
+      const baseUrl = 'https://tu-enlace-de-onedrive.com/Certificado_' + certNum + '.pdf';
+
+      const link = document.createElement('a');
+      link.href = baseUrl;
+      link.target = '_blank';
+      link.innerText = 'Abrir Certificado';
+
+      const div = document.getElementById('resultado');
+      div.innerHTML = '';
+      div.appendChild(link);
+    }
+
+    // Detectar si hay un parámetro en la URL como ?num=12345
+    window.onload = () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const certNum = urlParams.get('num');
+      if (certNum) {
+        document.getElementById('certInput').value = certNum;
+        buscarCertificado();
+      }
+    };
+  </script>
+</body>
+</html>
